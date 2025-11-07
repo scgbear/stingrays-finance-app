@@ -5,13 +5,21 @@ import json
 def home(request):
     return render(request, 'core/home.html')
 
+def about(request):
+    return render(request, 'core/about.html')
+
+def pricing(request):
+    return render(request, 'core/pricing.html')
+
+def free_tools(request):
+    return render(request, 'core/free-tools.html')
+
 def calculate_compound_interest(initial_investment, monthly_contribution, annual_return, years):
     """
     Calculate compound interest with monthly contributions
     Returns: dict with final value, total contributions, interest earned, growth multiple, and yearly data
     """
     pass
-
 def investment_calculator(request):
     # Default values
     initial_investment = 10000

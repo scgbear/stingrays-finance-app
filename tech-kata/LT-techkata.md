@@ -71,7 +71,7 @@ Welcome to the Stingrays Finance App coding kata! This exercise challenges you t
 
 ### Task 2: SEO-Optimized Blog System (15 minutes)
 
-**Objective:** Build an integrated blog system to drive organic traffic through search engine optimization.
+**Objective:** Build an integrated blog system to drive organic traffic through search engine optimization. (Note: Libraries like Wagtail can be used)
 
 **Requirements:**
 
