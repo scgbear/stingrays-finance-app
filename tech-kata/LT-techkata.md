@@ -81,7 +81,7 @@ The logo should display at a reasonable size that fits proportionally within the
 
 ---
 
-### 🐛 TICKET-002: Investment Calculator Throws Error
+### 🐛 TICKET-002: Investment Calculator Throws TypeError
 
 **Type:** Bug  
 **Priority:** Critical  
@@ -89,31 +89,58 @@ The logo should display at a reasonable size that fits proportionally within the
 
 **Description:**
 
-The investment calculator feature is currently broken and throws an error when users attempt to perform calculations. This is a critical bug as it affects core functionality.
+The investment calculator feature is currently broken and throws a `TypeError: 'NoneType' object is not subscriptable` when users navigate to the Investment Calculator page. This is a critical bug as it prevents the page from loading entirely.
+
+**Error Details:**
+
+```
+TypeError at /free-tools/investment-calculator/
+'NoneType' object is not subscriptable
+
+Request Method: GET
+Request URL: http://localhost:8000/free-tools/investment-calculator/
+Django Version: 5.2.6
+Exception Type: TypeError
+Exception Value: 'NoneType' object is not subscriptable
+Exception Location: /workspaces/stingrays-finance-app/apps/core/views.py, line 54, in investment_calculator
+Raised during: apps.core.views.investment_calculator
+Python Version: 3.11.13
+```
 
 **Steps to Reproduce:**
 
-1. Navigate to the Investment Calculator page
-2. Enter investment details (amount, interest rate, time period)
-3. Submit the form
-4. Observe error being thrown
+1. Start the Django development server
+2. Navigate to `/free-tools/investment-calculator/`
+3. Observe the TypeError being thrown immediately upon page load
+4. The page fails to render
+
+**Root Cause:**
+
+The error occurs at line 54 in `apps/core/views.py` where the code attempts to access `results['final_value']`, but `results` is `None`. This suggests the calculation function is returning `None` instead of a dictionary with the expected keys.
 
 **Expected Behavior:**
 
-The calculator should accept user inputs, perform compound interest calculations, and display results without errors.
+- The Investment Calculator page should load successfully without errors
+- Users should be able to view the calculator form
+- When form is submitted with valid inputs, calculations should be performed
+- Results should be displayed in a user-friendly format
 
 **Acceptance Criteria:**
 
+- [ ] Investment Calculator page loads without throwing TypeError
+- [ ] Page displays the input form correctly on GET requests
 - [ ] Users can input initial investment amount, interest rate, and time period
 - [ ] Backend calculates compound interest accurately using formula: P(1 + r/n)^(nt)
-- [ ] Results are displayed in a user-friendly format
+- [ ] Results are displayed in a user-friendly format after form submission
 - [ ] Form validation prevents invalid inputs (negative values, empty fields, etc.)
 - [ ] Error handling for edge cases is implemented
 - [ ] No errors are thrown during normal operation
 
 **Technical Specifications:**
 
-- Debug existing views and forms in `apps/core`
+- Fix the bug in `apps/core/views.py` at line 54
+- Ensure the view handles both GET and POST requests properly
+- The calculation function should return a dictionary with expected keys or handle None case
 - Implement proper form handling and validation
 - Add error handling for edge cases
 - Follow Django best practices for URL routing
@@ -121,9 +148,10 @@ The calculator should accept user inputs, perform compound interest calculations
 
 **Investigation Notes:**
 
-- Check `apps/core/views.py` for calculator logic
-- Review form validation in templates
-- Inspect error logs for specific error messages
+- Primary issue: Line 54 in `apps/core/views.py` - `results['final_value']` where `results` is `None`
+- Check if calculation function is being called conditionally (only on POST)
+- Verify the view logic distinguishes between GET (display form) and POST (process form) requests
+- Ensure template rendering has appropriate context for both scenarios
 
 ---
 
