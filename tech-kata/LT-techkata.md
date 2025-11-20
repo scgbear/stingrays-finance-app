@@ -185,7 +185,7 @@ As a marketing admin, I want to create and publish SEO-optimized blog posts so t
 
 **Acceptance Criteria:**
 
-- [ ] Admin can create, edit, and publish blog posts through Django admin
+- [ ] Admin/Writers can create, edit, and publish blog posts through
 - [ ] Blog posts have SEO-friendly URLs (auto-generated slugs from titles)
 - [ ] Meta descriptions and title tags are automatically generated
 - [ ] Blog listing page shows published posts with pagination (10 posts per page)
@@ -204,13 +204,9 @@ As a marketing admin, I want to create and publish SEO-optimized blog posts so t
 - Publication date tracking
 
 **Technical Specifications:**
-
-- Create blog models in `apps/core/models.py` or separate blog app
-- Register models with Django admin
 - Create views for blog list and detail pages
 - Add URL routing for blog endpoints
 - Create responsive templates for blog pages
-- Consider using libraries like Wagtail or Django-SEO if time permits
 - Implement pagination using Django's built-in pagination
 
 **Design Considerations:**
